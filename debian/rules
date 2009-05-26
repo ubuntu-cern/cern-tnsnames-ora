@@ -2,7 +2,8 @@
 #
 # debian/rules for cern-tnsnames-ora
 #
-# GNU copyright 2008 Akos FROHNER <akos@frohner.hu>
+# GNU Copyright 2008-2009. 
+# Akos FROHNER <akos@frohner.hu>
 #
 
 SHELL := sh -e
@@ -18,23 +19,24 @@ clean:
 install: build
 	dh_testdir
 	dh_testroot
-	dh_clean -l
-	dh_installdirs
+	dh_prep
 
 binary-indep: build install
 	dh_testdir
 	dh_testroot
-	dh_install
 	dh_installcron
-	dh_installman
+	dh_install tnsnames-ora-env.sh /etc/profile.d
+	dh_install tnsnames.ora /etc/tnsadmin
+	dh_fixperms
+	dh_installchangelogs
 	dh_installdeb
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 
-binary-arch: build install
-# nothing to do here
+binary-arch:
 
 binary: binary-indep binary-arch
 
 .PHONY: build clean binary-indep binary-arch binary install
+
