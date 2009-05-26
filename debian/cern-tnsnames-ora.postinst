@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+   # trying to run the cron job to fetch the configuration
+   # file, but not failing, if it does not succeed
+   set +e
+   /etc/cron.daily/cern-tnsnames-ora
+   set -e
+fi
+
+#DEBHELPER#
+

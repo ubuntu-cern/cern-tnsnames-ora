@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+#
+# debian/rules for cern-tnsnames-ora
+#
+# GNU copyright 2008 Akos FROHNER <akos@frohner.hu>
+#
+
+SHELL := sh -e
+
+build:
+	dh_testdir
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -l
+	dh_installdirs
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_install
+	dh_installcron
+	dh_installman
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-arch: build install
+# nothing to do here
+
+binary: binary-indep binary-arch
+
+.PHONY: build clean binary-indep binary-arch binary install

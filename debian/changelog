@@ -1,0 +1,5 @@
+cern-tnsnames-ora (1.0.0-1) intrepid; urgency=low
+
+  * Initial release.
+
+ -- Frohner Ákos <akos@frohner.hu>  Wed, 26 Nov 2008 02:30:00 +0100

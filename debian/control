@@ -1,0 +1,18 @@
+Source: cern-tnsnames-ora
+Section: devel
+Priority: extra
+Build-Depends: debhelper (>= 3)
+Standards-Version: 3.7.2
+
+Package: cern-tnsnames-ora
+Section: admin
+Priority: extra
+Depends: wget, ${shlib:Depends}
+Description: tnsnames.ora updating mechanism for the Oracle Instantclient.
+ This wrapper package adds CERN-specific configuration information to
+ the Oracle Instantlient install: a cron job to update it daily the
+ /etc/tnsnames.ora configuration file.
+ . 
+ Please note that the configuration files is not included and it is 
+ only available for download in the CERN internal network!
+

@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Checks against a fresh version of the tnsnames.ora file.
+
+# local destination file
+TNSNAMES="/etc/tnsadmin/tnsnames.ora"
+
+# default URL 
+TNSNAMES_URL="http://service-oracle-tnsnames.web.cern.ch/service-oracle-tnsnames/tnsnames.ora"
+
+if [ ! -r "${TNSNAMES}" ] ; then
+    logger -p cron.info "skipping tnsnames.ora update, old config file removed?"
+    exit 0
+fi
+
+wget --timestamping --wait=30 --quiet --output-document="${TNSNAMES}.new" "${TNSNAMES_URL}" >& /dev/null
+if [ $? -eq 0 -a -s "${TNSNAMES}.new" ]; then  # accessible
+    if [ "${TNSNAMES}.new" -nt  "${TNSNAMES}" ]; then  # newer
+      mv "${TNSNAMES}.new" "${TNSNAMES}"
+      logger -p cron.info "updated ORACLE tnsnames.ora from ${TNSNAMES_URL}"
+    # else # nothing to do, remote hasn't changed
+    fi
+else
+    logger -p cron.warn "failed to update ORACLE tnsnames.ora from ${TNSNAMES_URL}"
+    exit 1
+fi
+
+exit 0
